@@ -21,7 +21,7 @@ public class Cobra implements Elementos {
 
 	@Override
 	public void desenharElement(Graphics g) {
-        g.setColor(Color.GREEN);
+        g.setColor(new Color(107,142,35));
 
         for (Point p : segmentos){
             g.fillRoundRect(p.x, p.y, passo, passo, 30, 30);

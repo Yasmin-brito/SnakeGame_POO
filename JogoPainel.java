@@ -15,12 +15,12 @@ public class JogoPainel extends JPanel implements KeyListener, ActionListener{
     private final int passo = 40;
     private final int largura = 1200;
     private final int altura = 800;
-    private final int velocidade = 150;
+    private final int velocidade = 250;
 
     private int pontuacao;
     private boolean gameOver = false;
 
-    private final Cobra cobra;
+    private Cobra cobra;
     private final Maca maca;
     private final Barreira barreira;
     private final Timer timer;
@@ -34,12 +34,13 @@ public class JogoPainel extends JPanel implements KeyListener, ActionListener{
         int startY = 160;
 
         cobra = new Cobra(startX, startY, passo);
+        cobra.setDirecao(1, 0);
+
         maca = new Maca(startX + 160, startY + 160, passo);
         barreira = new Barreira(startX, startY, passo);
 
         timer = new Timer(velocidade, this);
         timer.start();
-        
     }
 
     @Override
@@ -56,10 +57,14 @@ public class JogoPainel extends JPanel implements KeyListener, ActionListener{
 
             if (pegouApple(cobra, maca)) {
                 pontuacao++;
-                // adiciona barreira a cada 3 maçãs
                 if (pontuacao % 3 == 0) {
                     barreira.adicionaBarreiraAleatoria(largura, altura, passo, cobra.getSegmentos(), maca.getX(), maca.getY());
                 }
+
+                if(pontuacao % 5 == 0){
+                    aumentarVelocidade();
+                }
+
             }
 
             verificarColisoes();
@@ -109,6 +114,10 @@ public class JogoPainel extends JPanel implements KeyListener, ActionListener{
         return false;
     }
 
+    private void aumentarVelocidade(){
+        int novoDelay = Math.max(50, timer.getDelay() -13);
+        timer.setDelay(novoDelay);
+    }
 
     private void gameOver (Graphics g){
         gameOver = true;

@@ -33,18 +33,24 @@ public class Barreira implements Elementos {
             x = novaCols * passo;
             y = novaRow * passo;
 
-            if (y < 60)
+            if (y < passo)
                 continue;
 
             ArrayList<Point> novaBarreira = new ArrayList<>();
             boolean horizontal = rand.nextBoolean(); // 0 horizontal, 1 vertical;
+            boolean bateuNaMaca = false;
             boolean colisao = false;
 
             for (int i = 0; i < 3; i++) {
                 int novoX = x + (horizontal ? i * passo : 0);
                 int novoY = y + (horizontal ? 0 : i * passo);
 
-                
+                if (novoX < 0 || novoX >= painelWidth ||
+                novoY < 0 || novoY >= painelHeight) {
+                    colisao = true;
+                    break;
+                }
+
                 for (Point p : snakeSegments) {
                     if (p.x == novoX && p.y == novoY) {
                         colisao = true;
@@ -53,15 +59,24 @@ public class Barreira implements Elementos {
                 }
 
                 if (x == macaX && y == macaY) {
-                    colisao = true;
+                    bateuNaMaca = true;
                 }
 
+                for (Point b : blocos) {
+                    if (b.x == novoX && b.y == novoY) {
+                        colisao = true;
+                        break;
+                    }
+                }
 
                 if (colisao) {
                     break;
                 }
                 
                 novaBarreira.add(new Point(novoX, novoY));
+            }
+            if (bateuNaMaca) {
+                continue;
             }
             if(!colisao){
                 blocos.addAll(novaBarreira);
@@ -72,7 +87,7 @@ public class Barreira implements Elementos {
 
     @Override
     public void desenharElement(Graphics g) {
-        g.setColor(Color.DARK_GRAY);
+        g.setColor(new Color(92,51,23));
         for (Point p : blocos) {
             g.fillRect(p.x, p.y, passo, passo);
         }

@@ -148,9 +148,11 @@ public class JogoPainel extends JPanel implements KeyListener, ActionListener{
         }
     }
 
+
     private void reiniciarJogo(){
         pontuacao = 0;
         gameOver = false;
+        timer.setDelay(240);
         cobra.resetar(200, 160);
         maca.spawnRandom(largura, altura, passo, cobra.getSegmentos(), barreira.getBlocos());
         barreira.getBlocos().clear();

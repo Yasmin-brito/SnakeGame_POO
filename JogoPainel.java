@@ -6,7 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -20,13 +23,18 @@ public class JogoPainel extends JPanel implements KeyListener, ActionListener{
     private int pontuacao;
     private boolean gameOver = false;
 
+    private BufferedImage imagemDeFundo;
     private Cobra cobra;
     private final Maca maca;
     private final Barreira barreira;
     private final Timer timer;
     
     public JogoPainel(){
-        setBackground(Color.LIGHT_GRAY);
+        try {
+            imagemDeFundo = ImageIO.read(new File("img/fotoFundo.jpg"));
+        } catch (Exception e) {
+            imagemDeFundo = null;
+        }
         setFocusable(true);
         addKeyListener(this);
 
@@ -85,7 +93,11 @@ public class JogoPainel extends JPanel implements KeyListener, ActionListener{
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.setColor(Color.GRAY);
+        if(imagemDeFundo != null){
+            g.drawImage(imagemDeFundo, 0, 0, largura, altura, this);
+        } else{
+            g.setColor(Color.LIGHT_GRAY);
+        }
 
         desenharElementos(g);
         desenharPontuacao(g);
@@ -115,7 +127,7 @@ public class JogoPainel extends JPanel implements KeyListener, ActionListener{
     }
 
     private void aumentarVelocidade(){
-        int novoDelay = Math.max(50, timer.getDelay() -13);
+        int novoDelay = Math.max(50, timer.getDelay() -15);
         timer.setDelay(novoDelay);
     }
 

@@ -43,8 +43,8 @@ public class Maca implements Elementos {
     public void spawnRandom(int painelWidth, int painelHeight, int passo, ArrayList<Point> snakeSegments, ArrayList<Point> barreiras){
         Random rand = new Random();
 
-        int colunas = (painelWidth / passo)-1 ;
-        int linhas = (painelHeight / passo) -1;
+        int colunas = (painelWidth / passo)-1;
+        int linhas = (painelHeight / passo)-1;
 
         while(true){
             int novaCols = rand.nextInt(colunas);
@@ -53,7 +53,7 @@ public class Maca implements Elementos {
             x = novaCols * passo;
             y = novaRow * passo;
 
-            if (y < 60) continue;
+            if (y < passo) continue;
 
             Point ponto = new Point(x, y);
             boolean colisao = false;

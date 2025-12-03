@@ -1,4 +1,5 @@
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class Main extends JFrame {
     public static void main(String[] args) {
@@ -12,5 +13,12 @@ public class Main extends JFrame {
         A.setResizable(false);
         A.setLocationRelativeTo(null);
 
+       String nomeJogador;
+        do{
+            nomeJogador = JOptionPane.showInputDialog(null, "Digite o nome da sua cobra: ");
+        } while(nomeJogador == null || nomeJogador.trim().isEmpty());
+        
+        painel.setNomeJogador(nomeJogador);
+        painel.starGame();
     }
 }
